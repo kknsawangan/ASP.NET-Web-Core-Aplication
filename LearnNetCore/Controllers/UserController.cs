@@ -11,6 +11,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using System.Net.Mail;
+using System.Net;
+using System.Text;
+using LearnNetCore.Services;
 
 namespace LearnNetCore.Controllers
 {
@@ -19,9 +23,15 @@ namespace LearnNetCore.Controllers
     public class UserController : ControllerBase
     {
         private readonly MyContext _context;
-        public UserController(MyContext myContext)
+        private readonly UserManager<User> _userManager;
+        AttrEmail attrEmail = new AttrEmail();
+        RandomDigit randDig = new RandomDigit();
+        SmtpClient client = new SmtpClient();
+
+        public UserController(MyContext myContext, UserManager<User> userManager)
         {
             _context = myContext;
+            _userManager = userManager;
         }
 
         // GET api/values
@@ -68,29 +78,54 @@ namespace LearnNetCore.Controllers
         }
 
         [HttpPost]
+        [HttpPost]
         public IActionResult Create(UserVM userVM)
         {
-            userVM.RoleName = "Sales";
-            var user = new User();
-            var roleUser = new RoleUser();
-            var hasbcrypt = BCrypt.Net.BCrypt.HashPassword(userVM.Password,12);
-            var role = _context.Roles.Where(r => r.Name == userVM.RoleName).FirstOrDefault();
-            user.UserName = userVM.UserName;
-            user.Email = userVM.Email;
-            user.EmailConfirmed = false;
-            user.PasswordHash = hasbcrypt;
-            user.PhoneNumber = userVM.Phone;
-            user.PhoneNumberConfirmed = false;
-            user.TwoFactorEnabled = false;
-            user.LockoutEnabled = false;
-            user.AccessFailedCount = 0;
-            roleUser.User = user;
-            roleUser.Role = role;
-            _context.RoleUsers.AddAsync(roleUser);
-            _context.Users.AddAsync(user);
-            _context.SaveChanges();
-            return Ok("Successfully Created");
-            //return data;
+            if (ModelState.IsValid)
+            {
+                client.Port = 587;
+                client.Host = "smtp.gmail.com";
+                client.EnableSsl = true;
+                client.Timeout = 10000;
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                client.UseDefaultCredentials = false;
+                client.Credentials = new NetworkCredential(attrEmail.mail, attrEmail.pass);
+
+                var code = randDig.GenerateRandom();
+                var fill = "Hi " + userVM.UserName + "\n\n"
+                          + "Try this Password to get into reset password: \n"
+                          + code
+                          + "\n\nThank You";
+
+                MailMessage mm = new MailMessage("donotreply@domain.com", userVM.Email, "Create Email", fill);
+                mm.BodyEncoding = UTF8Encoding.UTF8;
+                mm.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
+                client.Send(mm);
+
+                var user = new User
+                {
+                    UserName = userVM.UserName,
+                    Email = userVM.Email,
+                    SecurityStamp = code,
+                    PasswordHash = Bcrypt.HashPassword(userVM.Password),
+                    PhoneNumber = userVM.Phone,
+                    EmailConfirmed = false,
+                    PhoneNumberConfirmed = false,
+                    TwoFactorEnabled = false,
+                    LockoutEnabled = false,
+                    AccessFailedCount = 0
+                };
+                _context.Users.Add(user);
+                var uRole = new RoleUser
+                {
+                    UserId = user.Id,
+                    RoleId = "2"
+                };
+                _context.RoleUsers.Add(uRole);
+                _context.SaveChanges();
+                return Ok("Successfully Created");
+            }
+            return BadRequest("Not Successfully");
         }
 
         [HttpPut("{id}")]
@@ -165,6 +200,47 @@ namespace LearnNetCore.Controllers
             }
             return BadRequest(500);
         }
+
+        [HttpPost]
+        [Route("code")]
+        public IActionResult VerifyCode(UserVM userVM)
+        {
+            if (ModelState.IsValid)
+            {
+                var getUserRole = _context.UserRole.Include("User").Include("Role").SingleOrDefault(x => x.User.Email == userVM.Email);
+                if (getUserRole == null)
+                {
+                    return NotFound();
+                }
+                else if (userVM.VerifyCode != getUserRole.User.SecurityStamp)
+                {
+                    return BadRequest(new { msg = "Your Code is Wrong" });
+                }
+                else
+                {
+                    //var user = new UserVM();
+                    //user.Id = getUserRole.User.Id;
+                    //user.Username = getUserRole.User.UserName;
+                    //user.Email = getUserRole.User.Email;
+                    //user.Password = getUserRole.User.PasswordHash;
+                    //user.Phone = getUserRole.User.PhoneNumber;
+                    //user.RoleName = getUserRole.Role.Name;
+                    //return StatusCode(200, user);
+                    return StatusCode(200, new
+                    {
+                        Id = getUserRole.User.Id,
+                        Username = getUserRole.User.UserName,
+                        Email = getUserRole.User.Email,
+                        RoleName = getUserRole.Role.Name,
+                        //Email = getUserRole.User.Email,
+                        //Password = getUserRole.User.PasswordHash
+                    });
+                }
+            }
+            return BadRequest(500);
+        }
+
+
     }
 
 }

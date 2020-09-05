@@ -11,7 +11,7 @@ namespace WebClient.Controllers
     {
         public IActionResult Index()
         {
-            if (HttpContext.Session.IsAvailable)
+            if (HttpContext.Session.GetString("lvl") == "Sales" || HttpContext.Session.GetString("lvl") == "Admin");
             {
                 return View();
             }

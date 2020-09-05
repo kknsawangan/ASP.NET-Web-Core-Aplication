@@ -76,7 +76,7 @@ using WebClient.Models;
             ");
             EndContext();
             BeginContext(393, 1332, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8c6e66f58b8a421aaa9391e5ccc1505c", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0d8a9d73f4e24325b4867cdbe5e4d34c", async() => {
                 BeginContext(412, 1306, true);
                 WriteLiteral(@"
                 <div class=""form-group row"">
@@ -138,7 +138,7 @@ using WebClient.Models;
                 WriteLiteral("\r\n        ");
                 EndContext();
                 BeginContext(2093, 47, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "cac5aa9a180d41439cf5247e4eb54e59", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "2a27a30cb86b4db09f152e29905822f8", async() => {
                 }
                 );
                 __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();

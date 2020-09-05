@@ -47,6 +47,14 @@ namespace Web.Controllers
                     {
                         var json = JsonConvert.DeserializeObject(data).ToString();
                         var account = JsonConvert.DeserializeObject<UserVM>(json);
+                        if (account.VerifyCode != null)
+                        {
+                            if (userVM.VerifyCode != account.VerifyCode)
+                            {
+                                return Json(new { status = true, msg = "Check your Code" });
+                            }
+                        }
+
                         if (BCrypt.Net.BCrypt.Verify(userVM.Password, account.Password) && (account.RoleName == "Admin" || account.RoleName == "Sales"))
                         {
                             HttpContext.Session.SetString("id", account.Id);
@@ -96,6 +104,14 @@ namespace Web.Controllers
             }
             return Redirect("/login");
         }
+
+        [Route ("Verify")]
+        public IActionResult verify()
+        {
+            return View();
+        }
+
+
 
         [Route("logout")]
         public IActionResult Logout()

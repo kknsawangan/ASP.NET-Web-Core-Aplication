@@ -13,6 +13,7 @@ namespace LearnNetCore.ViewModel
         public string Password { get; set; }
         public string Phone { get; set; }
         public string RoleName { get; set; }
+        public string VerifyCode { get; set; }
 
         public UserVM(UserVM user)
         {
@@ -21,6 +22,7 @@ namespace LearnNetCore.ViewModel
             this.UserName = user.UserName;
             this.Password = user.Password;
             this.Phone = user.Phone;
+            this.VerifyCode = user.VerifyCode;
         }
 
         public UserVM()

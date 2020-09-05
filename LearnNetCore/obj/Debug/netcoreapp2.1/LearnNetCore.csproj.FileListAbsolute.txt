@@ -11,4 +11,3 @@ C:\Users\Jepri\Documents\Visual Studio 2017\Projects\LearnNetCore\LearnNetCore\o
 C:\Users\Jepri\Documents\Visual Studio 2017\Projects\LearnNetCore\LearnNetCore\obj\Debug\netcoreapp2.1\LearnNetCore.RazorTargetAssemblyInfo.cache
 C:\Users\Jepri\Documents\Visual Studio 2017\Projects\LearnNetCore\LearnNetCore\obj\Debug\netcoreapp2.1\LearnNetCore.dll
 C:\Users\Jepri\Documents\Visual Studio 2017\Projects\LearnNetCore\LearnNetCore\obj\Debug\netcoreapp2.1\LearnNetCore.pdb
-C:\Users\Jepri\Documents\Visual Studio 2017\Projects\LearnNetCore\LearnNetCore\obj\Debug\netcoreapp2.1\LearnNetCore.csprojAssemblyReference.cache
