@@ -12568,11 +12568,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Jepri\\Documents\\Visual Studio 2017\\Projects\\LearnNetCore\\LearnNetCore\\LearnNetCore.csproj",
+      "projectUniqueName": "C:\\Users\\Jepri\\Documents\\GitHub\\ASP.NET-Web-Core-Aplication\\LearnNetCore\\LearnNetCore.csproj",
       "projectName": "LearnNetCore",
-      "projectPath": "C:\\Users\\Jepri\\Documents\\Visual Studio 2017\\Projects\\LearnNetCore\\LearnNetCore\\LearnNetCore.csproj",
+      "projectPath": "C:\\Users\\Jepri\\Documents\\GitHub\\ASP.NET-Web-Core-Aplication\\LearnNetCore\\LearnNetCore.csproj",
       "packagesPath": "C:\\Users\\Jepri\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Jepri\\Documents\\Visual Studio 2017\\Projects\\LearnNetCore\\LearnNetCore\\obj\\",
+      "outputPath": "C:\\Users\\Jepri\\Documents\\GitHub\\ASP.NET-Web-Core-Aplication\\LearnNetCore\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

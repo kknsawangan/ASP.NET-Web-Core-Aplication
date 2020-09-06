@@ -8,7 +8,7 @@ namespace LearnNetCore.Services
     public class AttrEmail
     {
         public string mail = "jepri.tugas@gmail.com";
-        public string pass = "ajkhdashflkajfl";
+        public string pass = "indramayuplaza";
     }
 
     public class RandomDigit

@@ -12586,11 +12586,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Jepri\\Documents\\Visual Studio 2017\\Projects\\LearnNetCore\\WebClient\\WebClient.csproj",
+      "projectUniqueName": "C:\\Users\\Jepri\\Documents\\GitHub\\ASP.NET-Web-Core-Aplication\\WebClient\\WebClient.csproj",
       "projectName": "WebClient",
-      "projectPath": "C:\\Users\\Jepri\\Documents\\Visual Studio 2017\\Projects\\LearnNetCore\\WebClient\\WebClient.csproj",
+      "projectPath": "C:\\Users\\Jepri\\Documents\\GitHub\\ASP.NET-Web-Core-Aplication\\WebClient\\WebClient.csproj",
       "packagesPath": "C:\\Users\\Jepri\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Jepri\\Documents\\Visual Studio 2017\\Projects\\LearnNetCore\\WebClient\\obj\\",
+      "outputPath": "C:\\Users\\Jepri\\Documents\\GitHub\\ASP.NET-Web-Core-Aplication\\WebClient\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -12609,8 +12609,8 @@
       "frameworks": {
         "netcoreapp2.1": {
           "projectReferences": {
-            "C:\\Users\\Jepri\\Documents\\Visual Studio 2017\\Projects\\LearnNetCore\\LearnNetCore\\LearnNetCore.csproj": {
-              "projectPath": "C:\\Users\\Jepri\\Documents\\Visual Studio 2017\\Projects\\LearnNetCore\\LearnNetCore\\LearnNetCore.csproj"
+            "C:\\Users\\Jepri\\Documents\\GitHub\\ASP.NET-Web-Core-Aplication\\LearnNetCore\\LearnNetCore.csproj": {
+              "projectPath": "C:\\Users\\Jepri\\Documents\\GitHub\\ASP.NET-Web-Core-Aplication\\LearnNetCore\\LearnNetCore.csproj"
             }
           }
         }

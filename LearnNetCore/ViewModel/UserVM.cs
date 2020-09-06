@@ -22,7 +22,6 @@ namespace LearnNetCore.ViewModel
             this.UserName = user.UserName;
             this.Password = user.Password;
             this.Phone = user.Phone;
-            this.VerifyCode = user.VerifyCode;
         }
 
         public UserVM()

@@ -78,54 +78,47 @@ namespace LearnNetCore.Controllers
         }
 
         [HttpPost]
-        [HttpPost]
         public IActionResult Create(UserVM userVM)
         {
-            if (ModelState.IsValid)
-            {
-                client.Port = 587;
-                client.Host = "smtp.gmail.com";
-                client.EnableSsl = true;
-                client.Timeout = 10000;
-                client.DeliveryMethod = SmtpDeliveryMethod.Network;
-                client.UseDefaultCredentials = false;
-                client.Credentials = new NetworkCredential(attrEmail.mail, attrEmail.pass);
+            client.Port = 587;
+            client.Host = "smtp.gmail.com";
+            client.EnableSsl = true;
+            client.Timeout = 10000;
+            client.DeliveryMethod = SmtpDeliveryMethod.Network;
+            client.UseDefaultCredentials = false;
+            client.Credentials = new NetworkCredential(attrEmail.mail, attrEmail.pass);
 
-                var code = randDig.GenerateRandom();
-                var fill = "Hi " + userVM.UserName + "\n\n"
-                          + "Try this Password to get into reset password: \n"
-                          + code
-                          + "\n\nThank You";
+            var code = randDig.GenerateRandom();
+            var fill = "Hi " + userVM.UserName + "\n\n"
+                      + "Try this Password to get into reset password: \n"
+                      + code
+                      + "\n\nThank You";
 
-                MailMessage mm = new MailMessage("donotreply@domain.com", userVM.Email, "Create Email", fill);
-                mm.BodyEncoding = UTF8Encoding.UTF8;
-                mm.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
-                client.Send(mm);
+            MailMessage mm = new MailMessage("donotreply@domain.com", userVM.Email, "Create Email", fill);
+            mm.BodyEncoding = UTF8Encoding.UTF8;
+            mm.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
+            client.Send(mm);
 
-                var user = new User
-                {
-                    UserName = userVM.UserName,
-                    Email = userVM.Email,
-                    SecurityStamp = code,
-                    PasswordHash = Bcrypt.HashPassword(userVM.Password),
-                    PhoneNumber = userVM.Phone,
-                    EmailConfirmed = false,
-                    PhoneNumberConfirmed = false,
-                    TwoFactorEnabled = false,
-                    LockoutEnabled = false,
-                    AccessFailedCount = 0
-                };
-                _context.Users.Add(user);
-                var uRole = new RoleUser
-                {
-                    UserId = user.Id,
-                    RoleId = "2"
-                };
-                _context.RoleUsers.Add(uRole);
-                _context.SaveChanges();
-                return Ok("Successfully Created");
-            }
-            return BadRequest("Not Successfully");
+            userVM.RoleName = "Sales";
+            var user = new User();
+            var roleuser = new RoleUser();
+            var role = _context.Roles.Where(r => r.Name == userVM.RoleName).FirstOrDefault();
+            user.UserName = userVM.UserName;
+            user.Email = userVM.Email;
+            user.EmailConfirmed = false;
+            user.PasswordHash = Bcrypt.HashPassword(userVM.Password);
+            user.PhoneNumber = userVM.Phone;
+            user.PhoneNumberConfirmed = false;
+            user.TwoFactorEnabled = false;
+            user.LockoutEnabled = false;
+            user.AccessFailedCount = 0;
+            user.SecurityStamp = code;
+            roleuser.Role = role;
+            roleuser.User = user;
+            _context.RoleUsers.AddAsync(roleuser);
+            _context.Users.AddAsync(user);
+            _context.SaveChanges();
+            return Ok("Successfully Created");
         }
 
         [HttpPut("{id}")]
@@ -207,7 +200,7 @@ namespace LearnNetCore.Controllers
         {
             if (ModelState.IsValid)
             {
-                var getUserRole = _context.UserRole.Include("User").Include("Role").SingleOrDefault(x => x.User.Email == userVM.Email);
+                var getUserRole = _context.RoleUsers.Include("User").Include("Role").SingleOrDefault(x => x.User.Email == userVM.Email);
                 if (getUserRole == null)
                 {
                     return NotFound();
