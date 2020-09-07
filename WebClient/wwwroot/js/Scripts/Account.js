@@ -100,7 +100,7 @@ function Register() {
                             '<a href="{3}" target="{4}" data-notify="url"></a>' +
                             '</div>'
                     });
-                window.location.href = "/verify?mail=" + Account.Email;
+                window.location.href = "/verify?mail=" + auth.Email;
             } else {
                 $.notify({
                     // options
