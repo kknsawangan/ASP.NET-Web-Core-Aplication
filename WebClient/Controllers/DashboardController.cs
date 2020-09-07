@@ -11,11 +11,11 @@ namespace WebClient.Controllers
     {
         public IActionResult Index()
         {
-            if (HttpContext.Session.GetString("lvl") == "Sales" || HttpContext.Session.GetString("lvl") == "Admin");
+            if (HttpContext.Session.GetString("lvl") == "Sales" || HttpContext.Session.GetString("lvl")== "Admin")
             {
                 return View();
             }
-            return RedirectToAction("Login", "Account");
+            return Redirect("/Login");
         }
     }
 }
